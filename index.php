@@ -3,7 +3,7 @@
 <style>
 #navbar{
 	position:fixed;
-	transition:0.4s;
+	transition:0.7s;
 	width:100%;
 	height:100%;
 	top:0px;
@@ -25,7 +25,7 @@ div.navbar_sub{
 }
 
 #navbar_logo{
-	top:0.9%;
+	top:0.8%;
 	left:1.6%;
 }
 
@@ -47,7 +47,7 @@ div.navbar_sub{
 
 #navbar_back{
 	display:inline-block;
-	transition:0.4s;
+	transition:0.35s;
 	width:100%;
 	height:100%;
 	postion:absolute;
@@ -68,14 +68,23 @@ div.navbar_sub{
 	height:30px;
 	
 }
+
+div.blog{
+	width:90%;
+	height:700px;
+	margin-left:5%;
+	margin-right:5%;
+}
+
 </style>
 <script>
 function xyz(){
-	element=document.getElementById("navbar");
+	contents=document.getElementById("contents");
+	navbar=document.getElementById("navbar");
 	image=document.getElementById("navbar_back");
 	//element.innerHTML=document.body.scrollTop;
 	if(document.body.scrollTop>80){
-		element.style="height:50px;";
+		navbar.style="height:50px;";
 		image.style="visibility:hidden;";
 	}
 	else{
@@ -100,94 +109,40 @@ function xyz(){
 	</div>
 	
 </div>
+<br><br><br><br><br><br><br><br>
+<?php
+$con=mysqli_connect("localhost","root","") or die("Can't connect to server.");
+mysqli_select_db($con,"de_blog") or die("Create a database first.");
 
-<br><br><br><br><br><br><br><br><br><br>
+if(mysqli_query($con,"SELECT COUNT(*) FROM `blogs`")){
+	$count=mysqli_fetch_row(mysqli_query($con,"SELECT COUNT(*) FROM `blogs`"));
+	$count=$count[0];
+}
 
+$fetch_qry="SELECT * FROM `blogs`";
+$fetch_data=mysqli_query($con,$fetch_qry);
+while($count>0){
+	$row=mysqli_fetch_row($fetch_data);
+	echo "<script>
+		function expand_description(id){
+			var short_desc= 'short_desc'+id;
+			var ext_desc='ext_desc'+id;
+			document.getElementById(short_desc).innerHTML='';
+			document.getElementById(ext_desc).style='visibility:visible;';
+		}
+	</script>
+		<div class='blog' id='blog$row[0]'>
+		<img style='width:200px;height:200px;' src='$row[4]'/><br><br>
+		$row[5]<br><br>
+		<h2>$row[1]</h2><br><br>
+		<div id='short_desc$row[0]'>$row[2]<br><button onclick='expand_description($row[0])'>Read More...</button></div><br><br><br><br><br>
+		<div style='visibility:hidden;' id='ext_desc$row[0]'>$row[3]</div><br><br><br>
+	</div>";
+	$count-=1;
+}
 
-<pre>
-asdasd
-
-absa
-absa
-
-absa
-absa
-
-
-absa
-absa
-abs
-absa
-absa
-absa
-abs
-absa
-abs
-absa
-absa
-abs
-absa
-abs
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-aaaa
-</pre>
+?>
 <div id="footer"></div>
 </body>
 </html>
 
-<?php
-session_start();
-$_SESSION["username"]="";
-$_SESSION["password"]="";
-?>
