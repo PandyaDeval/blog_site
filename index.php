@@ -1,13 +1,19 @@
 <html>
 <link rel="shortcut icon" type="image/png" href="favicon.png"/>
 <style>
+
+body{
+	padding:0px;
+	margin:0px;
+}
+
 #navbar{
 	position:fixed;
 	transition:0.7s;
 	width:100%;
 	height:100%;
 	top:0px;
-	background-color:grey;
+	background-color:lightgreen;
 }
 
 div.navbar_sub{
@@ -38,7 +44,7 @@ div.navbar_sub{
 }
 
 #navbar_contactus{
-	left:28%;
+	left:29%;
 }
 
 #navbar_search{
@@ -70,6 +76,7 @@ div.navbar_sub{
 }
 
 div.blog{
+	display:block;
 	width:90%;
 	height:700px;
 	margin-left:5%;
@@ -93,7 +100,7 @@ function xyz(){
 	}
 }
 </script>
-<body onscroll="xyz()" style='padding:0px;margin:0px;'>
+<body onscroll="xyz()">
 
 <div class="navbar_main" id="navbar">
 	
@@ -128,16 +135,16 @@ while($count>0){
 			var short_desc= 'short_desc'+id;
 			var ext_desc='ext_desc'+id;
 			document.getElementById(short_desc).innerHTML='';
-			document.getElementById(ext_desc).style='visibility:visible;';
+			document.getElementById(ext_desc).style='';
 		}
 	</script>
 		<div class='blog' id='blog$row[0]'>
-		<img style='width:200px;height:200px;' src='$row[4]'/><br><br>
+		<img style='width:400px;height:400px;' src='$row[4]'/><br><br>
 		$row[5]<br><br>
 		<h2>$row[1]</h2><br><br>
-		<div id='short_desc$row[0]'>$row[2]<br><button onclick='expand_description($row[0])'>Read More...</button></div><br><br><br><br><br>
-		<div style='visibility:hidden;' id='ext_desc$row[0]'>$row[3]</div><br><br><br>
-	</div>";
+		<div id='short_desc$row[0]'>$row[2]<br><a href='blog_detailed.php?id=$row[0]'>Read more...</a><!--<button onclick='expand_description($row[0])'>Read More...</button>--></div><br><br><br><br><br>
+		<!--<div style='' id='ext_desc$row[0]'>$row[3]</div>-->
+	</div><br>";
 	$count-=1;
 }
 
