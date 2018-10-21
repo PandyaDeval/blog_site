@@ -13,7 +13,8 @@ body{
 	width:100%;
 	height:100%;
 	top:0px;
-	background-color:lightgreen;
+	background-color:darkblue;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
 div.navbar_sub{
@@ -83,6 +84,19 @@ div.blog{
 	margin-right:5%;
 }
 
+input:focus{
+	outline-style:none;
+	border: 2px solid red;
+}
+
+input{
+	border:1.5px solid black;
+}
+
+button:hover{
+	cursor:pointer;
+}
+
 </style>
 <script>
 function xyz(){
@@ -107,7 +121,7 @@ function xyz(){
 	<img id="navbar_back" src="home_navbar4.jpg"/>
 	<div class="navbar_sub" id="navbar_logo"><img id="logo" src='logo_transparent.png'/></div>
 	<a href="index.php"><div class="navbar_sub" id="navbar_sitename">De_Blog</div></a>
-	<a href="signin.php"><div class="navbar_sub" id="navbar_sign">Sign In/Register</div></a>
+	<a href="signin.html"><div class="navbar_sub" id="navbar_sign">Sign In/Register</div></a>
 	<a href=""><div class="navbar_sub" id="navbar_contactus">Contact Us </div></a>
 	<div class="navbar_sub" id="navbar_search">
 		<form name="search" method="POST"> 
