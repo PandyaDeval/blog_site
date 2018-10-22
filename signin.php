@@ -15,6 +15,9 @@ if($username!=''){
 	width:40%;
 	margin-left:30%;
 	margin_right:30%;
+	color:darkblue;
+	font-size:125%;
+	font-weight:bold;
 }
 
 #signin_submit{
@@ -41,11 +44,6 @@ input.login_form{
 	padding-left:0.5%;
 }
 
-#login_form{
-	font-size:125%;
-	font-weight:bold;
-	color:darkblue;
-}
 
 
 </style>
@@ -68,7 +66,7 @@ input.login_form{
 <br><br><br><br><br><br><br><br><br><br>
 
 <div id='main_div'>
-	<h2 style='color:darkblue;'><center>Sign In</center></h2>
+	<h1><center>Sign In</center></h1>
 <pre>
 <form id='login_form' method='POST' action='signin_success.php'>
  Username
@@ -79,6 +77,8 @@ input.login_form{
 
  <button id='signin_submit_btn'><input id='signin_submit' type='submit'/></button>
 </form>
+ Not a member? <a href='register.php'>Click Here</a> to register.
+ 
 </pre>
 
 </div>

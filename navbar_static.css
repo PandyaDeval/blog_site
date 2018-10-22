@@ -85,3 +85,20 @@ input{
 button:hover{
 	cursor:pointer;
 }
+
+div.blog{
+	display:block;
+	width:90%;
+	height:700px;
+	margin-left:5%;
+	margin-right:5%;
+}
+
+textarea{
+	border:1.5px solid black;
+}
+
+textarea:focus{
+	outline-style:none;
+	border: 2px solid red;
+}

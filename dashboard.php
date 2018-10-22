@@ -9,137 +9,54 @@ if($username!=''){
 		}
 	</script>";
 }
+else{
+	echo "<script>location='signin.php';</script>";
+}
 ?>
+
 <html>
 <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+<link rel="stylesheet" href="navbar_static.css"/>
 <style>
-
-body{
-	padding:0px;
-	margin:0px;
+#blog{
+	margin:20px;
 }
-
-#navbar{
+#dashboard_navbar{
 	position:fixed;
-	transition:0.7s;
-	width:100%;
-	height:100%;
-	top:0px;
-	background-color:darkblue;
+	width:20%;
+	height:25%;
+	top:20%;
+	right:0;
+	background-color:purple;
 	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
-div.navbar_sub{
+div.dashboard_navbar_sub{
 	position:fixed;
-	top:1.2%;
-	display:inline-block;
+	width:20%;
+	right:0;
 	font-weight:bold;
 	color:white;
 	font-size:150%;
+	text-align:center;
 }
 
-#logo{
-	height:40px;
-	width:40px;
+#write{
+	top:22%;
 }
 
-#navbar_logo{
-	top:0.8%;
-	left:1.6%;
+#edit{
+	top:30%;
 }
 
-#navbar_sitename{
-	left:4.5%;
+#delete{
+	top:38%;
 }
-
-#navbar_sign{
-	left:14%;
-}
-
-#navbar_contactus{
-	left:29%;
-}
-
-#navbar_username{
-	right:30%;
-}
-
-#navbar_logout{
-	right:20%;
-	visibility:hidden;
-}
-
-#navbar_search{
-	right:4%;
-}
-
-#navbar_back{
-	display:inline-block;
-	transition:0.35s;
-	width:100%;
-	height:100%;
-	postion:absolute;
-}
-
-#submit{
-	visibility:hidden;
-	width:100%;
-}
-
-#submitbtn{
-	background-color:transparent;
-	background-image:url("search_button.png");
-	background-size:100% 100%;
-	border:0;
-	color:white;
-	width:30px;
-	height:30px;
-	
-}
-
-div.blog{
-	display:block;
-	width:90%;
-	height:700px;
-	margin-left:5%;
-	margin-right:5%;
-}
-
-input:focus{
-	outline-style:none;
-	border: 2px solid red;
-}
-
-input{
-	border:1.5px solid black;
-}
-
-button:hover{
-	cursor:pointer;
-}
-
 </style>
-<script>
-function xyz(){
-	contents=document.getElementById("contents");
-	navbar=document.getElementById("navbar");
-	image=document.getElementById("navbar_back");
-	//element.innerHTML=document.body.scrollTop;
-	if(document.body.scrollTop>80){
-		navbar.style="height:50px;";
-		image.style="visibility:hidden;";
-	}
-	else{
-		element.style="height:100%;";
-		image.style="visibility:visible;";
-	}
-}
-</script>
-<body onscroll="xyz()">
 
+<body>
 <div class="navbar_main" id="navbar">
 	
-	<img id="navbar_back" src="home_navbar4.jpg"/>
 	<div class="navbar_sub" id="navbar_logo"><img id="logo" src='logo_transparent.png'/></div>
 	<a href="index.php"><div class="navbar_sub" id="navbar_sitename">De_Blog</div></a>
 	<a href="signin.php"><div class="navbar_sub" id="navbar_sign">Sign In/Register</div></a>
@@ -153,17 +70,21 @@ function xyz(){
 	</div>
 	
 </div>
-<br><br><br><br><br><br><br><br>
+
+<br><br><br><br>
+
+<h1 style='margin-left:5%;'> My Blogs :-</h1><br>
+
 <?php
 $con=mysqli_connect("localhost","root","") or die("Can't connect to server.");
 mysqli_select_db($con,"de_blog") or die("Create a database first.");
 
-if(mysqli_query($con,"SELECT COUNT(*) FROM `blogs`")){
-	$count=mysqli_fetch_row(mysqli_query($con,"SELECT COUNT(*) FROM `blogs`"));
+if(mysqli_query($con,"SELECT COUNT(*) FROM `blogs` WHERE username='$username'")){
+	$count=mysqli_fetch_row(mysqli_query($con,"SELECT COUNT(*) FROM `blogs` WHERE username='$username'"));
 	$count=$count[0];
 }
 
-$fetch_qry="SELECT * FROM `blogs`";
+$fetch_qry="SELECT * FROM `blogs` WHERE username='$username'";
 $fetch_data=mysqli_query($con,$fetch_qry);
 while($count>0){
 	$row=mysqli_fetch_row($fetch_data);
@@ -187,7 +108,12 @@ while($count>0){
 }
 
 ?>
-<div id="footer"></div>
+
+<div id='dashboard_navbar'>
+	<a href='write.php'><div class='dashboard_navbar_sub' id='write'>Write Blog</div></a>
+	<a href='edit.php'><div class='dashboard_navbar_sub' id='edit'>Edit Blog</div></a>
+	<a href='delete.php'><div class='dashboard_navbar_sub' id='delete'>Delete Blog</div></a>
+</div>
+
 </body>
 </html>
-
