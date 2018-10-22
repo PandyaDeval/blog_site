@@ -1,3 +1,11 @@
+<?php
+session_start();
+$username=$_SESSION['username'];
+if($username!=''){
+	echo "<script>alert('Already logged in.');location='index.php';</script>";
+}
+?>
+
 <html>
 <link rel="shortcut icon" type="image/png" href="favicon.png"/>
 <link rel="stylesheet" href="navbar_static.css"/>
@@ -62,7 +70,7 @@ input.login_form{
 <div id='main_div'>
 	<h2 style='color:darkblue;'><center>Sign In</center></h2>
 <pre>
-<form id='login_form' action='POST' method='signin_success.php'>
+<form id='login_form' method='POST' action='signin_success.php'>
  Username
 <input class='login_form' type='text' name='username' placeholder='Username'/>
 

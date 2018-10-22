@@ -1,3 +1,15 @@
+<?php
+session_start();
+$username=$_SESSION['username'];
+if($username!=''){
+	echo "<script>
+		window.onload = function verify_login(){
+			document.getElementById('navbar_logout').style='visibility:visible;';
+			document.getElementById('navbar_username').innerHTML='$username';
+		}
+	</script>";
+}
+?>
 <html>
 <link rel="shortcut icon" type="image/png" href="favicon.png"/>
 <style>
@@ -46,6 +58,15 @@ div.navbar_sub{
 
 #navbar_contactus{
 	left:29%;
+}
+
+#navbar_username{
+	right:30%;
+}
+
+#navbar_logout{
+	right:20%;
+	visibility:hidden;
 }
 
 #navbar_search{
@@ -121,8 +142,10 @@ function xyz(){
 	<img id="navbar_back" src="home_navbar4.jpg"/>
 	<div class="navbar_sub" id="navbar_logo"><img id="logo" src='logo_transparent.png'/></div>
 	<a href="index.php"><div class="navbar_sub" id="navbar_sitename">De_Blog</div></a>
-	<a href="signin.html"><div class="navbar_sub" id="navbar_sign">Sign In/Register</div></a>
+	<a href="signin.php"><div class="navbar_sub" id="navbar_sign">Sign In/Register</div></a>
 	<a href=""><div class="navbar_sub" id="navbar_contactus">Contact Us </div></a>
+	<a href=""><div class="navbar_sub" id="navbar_username"></div></a>
+	<a href="logout.php"><div class="navbar_sub" id="navbar_logout">Logout</div></a>
 	<div class="navbar_sub" id="navbar_search">
 		<form name="search" method="POST"> 
 			 <button id="submitbtn"><input type="submit" id="submit"/></button> <input type="text" name="search_text"/>

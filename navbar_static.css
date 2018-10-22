@@ -45,6 +45,14 @@ div.navbar_sub{
 	left:29%;
 }
 
+#navbar_username{
+	right:30%;
+}
+
+#navbar_logout{
+	right:20%;
+}
+
 #navbar_search{
 	right:4%;
 }

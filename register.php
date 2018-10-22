@@ -1,3 +1,6 @@
+<?php
+	
+?>
 <html>
 <link rel="shortcut icon" type="image/png" href="favicon.png"/>
 <link rel="stylesheet" href="navbar_static.css"/>
@@ -40,16 +43,16 @@ input.reg_form{
 	
 	<div class="navbar_sub" id="navbar_logo"><img id="logo" src='logo_transparent.png'/></div>
 	<a href="index.php"><div class="navbar_sub" id="navbar_sitename">De_Blog</div></a>
-	<a href="signin.html"><div class="navbar_sub" id="navbar_sign">Sign In/Register</div></a>
-	<a href=""><div class="navbar_sub" id="navbar_contactus">Contact Us </div></a>
+	<a href="signin.php"><div class="navbar_sub" id="navbar_sign">Sign In/Register</div></a>
+	<a href="contactus.html"><div class="navbar_sub" id="navbar_contactus">Contact Us</div></a>
 	<div class="navbar_sub" id="navbar_search">
 		<form name="search" method="POST"> 
 			 <button id="submitbtn"><input type="submit" id="submit"/></button> <input type="text" name="search_text"/>
 		</form>
 	</div>
 	
+	
 </div>
-
 <br><br><br><br>
 
 <h1><center><font style='color:green;text-decoration:underline;'>Register</font></center></h1><br>
