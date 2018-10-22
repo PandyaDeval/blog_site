@@ -11,7 +11,7 @@ if($username!=''){
 <link rel="stylesheet" href="navbar_static.css"/>
 <style>
 #main_div{
-	background-color:rgb(195,195,195);
+	background-color:rgb(255,255,255);
 	width:40%;
 	margin-left:30%;
 	margin_right:30%;

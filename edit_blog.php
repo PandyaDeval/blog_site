@@ -12,6 +12,9 @@ if($username!=''){
 else{
 	echo "<script>location='signin.php';</script>";
 }
+
+$id=$_GET['id'];
+$_SESSION['id']=$id;
 ?>
 
 <html>
@@ -91,6 +94,7 @@ textarea{
 	margin-right:1%;
 	padding-left:0.5%;
 }
+
 </style>
 
 <body>
@@ -118,29 +122,35 @@ textarea{
 	<a href='delete.php'><div class='dashboard_navbar_sub' id='delete'>Delete Blog</div></a>
 </div>
 
-<h1><center><font style='color:green;text-decoration:underline;'>Write a Blog</font></center></h1><br>
-<pre><form id='write_blog' action='write_success.php' method='POST'>
+<?php
+$con=mysqli_connect("localhost","root","") or die("Can't connect to server.");
+mysqli_select_db($con,"de_blog") or die("Create a database first.");
+
+$fetch_qry="SELECT * from `blogs` WHERE id='$id'";
+$row=mysqli_fetch_row(mysqli_query($con,$fetch_qry));
+
+echo "<pre><form id='write_blog' action='edit_success.php' method='POST'>
   Title<font style='color:red;'>*</font>
   
-<input class='write_blog_form' type='text' name='title' placeholder='Blog Title'/>
+<input class='write_blog_form' type='text' name='title' value='$row[1]' placeholder='Blog Title'/>
 	
   Short Description<font style='color:red;'>*</font>
   
-<input class='write_blog_form' type='text' name='short_desc' placeholder='Short Description'/>
+<input class='write_blog_form' type='text' value='$row[2]' name='short_desc' placeholder='Short Description'/>
 	
   Long Description<font style='color:red;'>*</font>
   
-<textarea class='write_blog_form' name='long_desc' placeholder='Long Description'></textarea>
+<textarea class='write_blog_form' name='long_desc' placeholder='Long Description'>$row[3]</textarea>
 	
   Image Link
   
-<input class='write_blog_form' type='text' name='imagelink' placeholder='Image Link'/>
+<input class='write_blog_form' type='text' value='$row[4]' name='imagelink' placeholder='Image Link'/>
 	
   
-  <button id='write_submit_btn'><input type='submit' id='write_submit'/>Create!</button>
+  <button id='write_submit_btn'><input type='submit' id='write_submit'/>Save Changes</button>
 	
 </form>
-</pre>
-
+</pre>";
+?>
 </body>
 </html>

@@ -15,6 +15,9 @@ if($username!=''){
 <style>
 
 body{
+	font-weight:bold;
+	background-color:black;
+	color:white;
 	padding:0px;
 	margin:0px;
 }
@@ -103,6 +106,7 @@ div.blog{
 	height:700px;
 	margin-left:5%;
 	margin-right:5%;
+	font-size:125%;
 }
 
 input:focus{
@@ -116,6 +120,14 @@ input{
 
 button:hover{
 	cursor:pointer;
+}
+
+a.read_more{
+	background-color:rgb(76,175,80);
+	color:white;
+	text-decoration:none;
+	padding:5px;
+	font-weight:bold;
 }
 
 </style>
@@ -167,21 +179,12 @@ $fetch_qry="SELECT * FROM `blogs`";
 $fetch_data=mysqli_query($con,$fetch_qry);
 while($count>0){
 	$row=mysqli_fetch_row($fetch_data);
-	echo "<script>
-		function expand_description(id){
-			var short_desc= 'short_desc'+id;
-			var ext_desc='ext_desc'+id;
-			document.getElementById(short_desc).innerHTML='';
-			document.getElementById(ext_desc).style='';
-		}
-	</script>
-		<div class='blog' id='blog$row[0]'>
+	echo "<div class='blog' id='blog$row[0]'>
 		<img style='width:400px;height:400px;' src='$row[4]'/><br><br>
 		$row[5]<br>
 		Author: $row[8]<br><br>
-		<h2>$row[1]</h2><br><br>
-		<div id='short_desc$row[0]'>$row[2]<br><a href='blog_detailed.php?id=$row[0]'>Read more...</a><!--<button onclick='expand_description($row[0])'>Read More...</button>--></div><br><br><br><br><br>
-		<!--<div style='' id='ext_desc$row[0]'>$row[3]</div>-->
+		<h2>$row[1]</h2><br>
+		<div id='short_desc$row[0]'>$row[2]<br><br><a class='read_more' href='blog_detailed.php?id=$row[0]'>Read more...</a></div>
 	</div><br>";
 	$count-=1;
 }

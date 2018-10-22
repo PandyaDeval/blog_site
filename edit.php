@@ -53,44 +53,6 @@ div.dashboard_navbar_sub{
 	top:38%;
 }
 
-#write_submit{
-	display:none;
-	width:100%;
-}
-
-#write_submit_btn{
-	background-color:green;
-	background-size:100% 100%;
-	border:0;
-	color:white;
-	width:15%;
-	height:5%;
-	text-align:center;
-	font-size:125%
-}
-
-
-input.write_blog_form{
-	width:98%;
-	height:5%;
-	margin-left:1%;
-	margin-right:1%;
-	padding-left:0.5%;
-}
-
-#write_form{
-	font-size:125%;
-	font-weight:bold;
-	color:green;
-}
-
-textarea{
-	width:98%;
-	height:20%;
-	margin-left:1%;
-	margin-right:1%;
-	padding-left:0.5%;
-}
 </style>
 
 <body>
@@ -118,29 +80,30 @@ textarea{
 	<a href='delete.php'><div class='dashboard_navbar_sub' id='delete'>Delete Blog</div></a>
 </div>
 
-<h1><center><font style='color:green;text-decoration:underline;'>Write a Blog</font></center></h1><br>
-<pre><form id='write_blog' action='write_success.php' method='POST'>
-  Title<font style='color:red;'>*</font>
-  
-<input class='write_blog_form' type='text' name='title' placeholder='Blog Title'/>
-	
-  Short Description<font style='color:red;'>*</font>
-  
-<input class='write_blog_form' type='text' name='short_desc' placeholder='Short Description'/>
-	
-  Long Description<font style='color:red;'>*</font>
-  
-<textarea class='write_blog_form' name='long_desc' placeholder='Long Description'></textarea>
-	
-  Image Link
-  
-<input class='write_blog_form' type='text' name='imagelink' placeholder='Image Link'/>
-	
-  
-  <button id='write_submit_btn'><input type='submit' id='write_submit'/>Create!</button>
-	
-</form>
-</pre>
+<?php
+$con=mysqli_connect("localhost","root","") or die("Can't connect to server.");
+mysqli_select_db($con,"de_blog") or die("Create a database first.");
+
+if(mysqli_query($con,"SELECT COUNT(*) FROM `blogs` WHERE username='$username'")){
+	$count=mysqli_fetch_row(mysqli_query($con,"SELECT COUNT(*) FROM `blogs` WHERE username='$username'"));
+	$count=$count[0];
+}
+
+$fetch_qry="SELECT * FROM `blogs` WHERE username='$username'";
+$fetch_data=mysqli_query($con,$fetch_qry);
+while($count>0){
+	$row=mysqli_fetch_row($fetch_data);
+	echo "<div class='blog' id='blog$row[0]'>
+		<img style='width:400px;height:400px;' src='$row[4]'/><br><br>
+		$row[5]<br>
+		Author: $row[8]<br><br>
+		<h2>$row[1]</h2><br>
+		<div id='short_desc$row[0]'>$row[2]<br><br><a class='read_more' href='edit_blog.php?id=$row[0]'>Edit Blog</a></div>
+	</div><br>";
+	$count-=1;
+}
+
+?>
 
 </body>
 </html>

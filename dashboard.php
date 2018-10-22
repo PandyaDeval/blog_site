@@ -71,6 +71,12 @@ div.dashboard_navbar_sub{
 	
 </div>
 
+<div id='dashboard_navbar'>
+	<a href='write.php'><div class='dashboard_navbar_sub' id='write'>Write Blog</div></a>
+	<a href='edit.php'><div class='dashboard_navbar_sub' id='edit'>Edit Blog</div></a>
+	<a href='delete.php'><div class='dashboard_navbar_sub' id='delete'>Delete Blog</div></a>
+</div>
+
 <br><br><br><br>
 
 <h1 style='margin-left:5%;'> My Blogs :-</h1><br>
@@ -88,32 +94,17 @@ $fetch_qry="SELECT * FROM `blogs` WHERE username='$username'";
 $fetch_data=mysqli_query($con,$fetch_qry);
 while($count>0){
 	$row=mysqli_fetch_row($fetch_data);
-	echo "<script>
-		function expand_description(id){
-			var short_desc= 'short_desc'+id;
-			var ext_desc='ext_desc'+id;
-			document.getElementById(short_desc).innerHTML='';
-			document.getElementById(ext_desc).style='';
-		}
-	</script>
-		<div class='blog' id='blog$row[0]'>
+	echo "<div class='blog' id='blog$row[0]'>
 		<img style='width:400px;height:400px;' src='$row[4]'/><br><br>
 		$row[5]<br>
 		Author: $row[8]<br><br>
-		<h2>$row[1]</h2><br><br>
-		<div id='short_desc$row[0]'>$row[2]<br><a href='blog_detailed.php?id=$row[0]'>Read more...</a><!--<button onclick='expand_description($row[0])'>Read More...</button>--></div><br><br><br><br><br>
-		<!--<div style='' id='ext_desc$row[0]'>$row[3]</div>-->
+		<h2>$row[1]</h2><br>
+		<div id='short_desc$row[0]'>$row[2]<br><br><a class='read_more' href='blog_detailed.php?id=$row[0]'>Read more...</a></div>
 	</div><br>";
 	$count-=1;
 }
 
 ?>
-
-<div id='dashboard_navbar'>
-	<a href='write.php'><div class='dashboard_navbar_sub' id='write'>Write Blog</div></a>
-	<a href='edit.php'><div class='dashboard_navbar_sub' id='edit'>Edit Blog</div></a>
-	<a href='delete.php'><div class='dashboard_navbar_sub' id='delete'>Delete Blog</div></a>
-</div>
 
 </body>
 </html>

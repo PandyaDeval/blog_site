@@ -55,6 +55,7 @@ $ext_description=wordwrap(nl2br($data[3]),135);
 			<h1>$data[1]</h1>
 		</center><br>
 		<h3>$data[5] ( +5:30 GMT )</h3><br>
+		Author: $data[8]<br><br>
 		<h2><pre>$ext_description</pre></h2>
 		<br><br>
 		<h3><pre>$data[6] Likes       $data[7] Comments</pre></h3>

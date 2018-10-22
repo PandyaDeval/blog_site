@@ -1,7 +1,10 @@
 
 body{
+	background-color:black;
+	color:white;
 	padding:0px;
 	margin:0px;
+	font-weight:bold;
 }
 
 #navbar{
@@ -51,6 +54,7 @@ div.navbar_sub{
 
 #navbar_logout{
 	right:20%;
+	visibility:hidden;
 }
 
 #navbar_search{
@@ -92,6 +96,7 @@ div.blog{
 	height:700px;
 	margin-left:5%;
 	margin-right:5%;
+	font-size:125%;
 }
 
 textarea{
@@ -101,4 +106,12 @@ textarea{
 textarea:focus{
 	outline-style:none;
 	border: 2px solid red;
+}
+
+a.read_more{
+	background-color:rgb(76,175,80);
+	color:white;
+	text-decoration:none;
+	padding:5px;
+	font-weight:bold;
 }
