@@ -130,20 +130,93 @@ a.read_more{
 	font-weight:bold;
 }
 
+#welcome_title{
+	text-shadow: 3px 3px blue, -3px -3px orange, 3px -3px green, -3px 3px yellow;
+	color:lightblue;
+}
+#welcome{
+	opacity:0;
+	position:fixed;
+	width:50%;
+	top:20%;
+	left:10%;
+	font-family:brush script mt;
+	font-size:300%;
+	display:inline-block;
+}
+#welcome.welcome_trans{
+	opacity:1;
+	position:fixed;
+	width:50%;
+	top:20%;
+	left:37%;
+	transition:1.5s;
+	transition-timing-function:ease-in-out;
+}
+
+#to{
+	opacity:0;
+	position:fixed;
+	width:50%;
+	top:20%;
+	right:-35%;
+	font-family:brush script mt;
+	font-size:300%;
+}
+#to.to_trans{
+	opacity:1;
+	position:fixed;
+	width:50%;
+	top:20%;
+	right:-7%;
+	transition:1.5s;
+	transition-timing-function:ease-in-out;
+}
+
+#deblog{
+	opacity:0;
+	position:fixed;
+	width:50%;
+	bottom:5%;
+	left:34%;
+	font-family:brush script mt;
+	font-size:400%;
+}
+#deblog.deblog_trans{
+	opacity:1;
+	position:fixed;
+	width:50%;
+	bottom:35%;
+	left:34%;
+	transition:1.5s;
+	transition-timing-function:ease-in-out;
+}
+
+
 </style>
 <script>
+var x = setTimeout(show,5);
+
+function show(){
+	document.getElementById("welcome").classList.add("welcome_trans");
+	document.getElementById("to").classList.add("to_trans");
+	document.getElementById("deblog").classList.add("deblog_trans");
+}
 function xyz(){
 	contents=document.getElementById("contents");
 	navbar=document.getElementById("navbar");
 	image=document.getElementById("navbar_back");
+	welcome_title=document.getElementById("welcome_title");
 	//element.innerHTML=document.body.scrollTop;
 	if(document.body.scrollTop>80){
 		navbar.style="height:50px;";
 		image.style="visibility:hidden;";
+		welcome_title.style="opacity:0;";
 	}
 	else{
 		element.style="height:100%;";
 		image.style="visibility:visible;";
+		welcome_title.style="opacity:1;";
 	}
 }
 </script>
@@ -190,6 +263,20 @@ while($count>0){
 }
 
 ?>
+
+<div id="welcome_title">
+<h1>
+<div id="welcome">
+Welcome
+</div>
+<div id="to">
+to
+</div>
+<div id="deblog">
+De_Blog!
+</div>
+</h1>
+</div>
 <div id="footer"></div>
 </body>
 </html>
