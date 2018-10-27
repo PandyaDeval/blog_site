@@ -18,6 +18,7 @@ if($username!=''){
 	color:darkblue;
 	font-size:125%;
 	font-weight:bold;
+	border-radius:5%;
 }
 
 #signin_submit{

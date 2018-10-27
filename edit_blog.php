@@ -3,7 +3,8 @@ session_start();
 $username=$_SESSION['username'];
 if($username!=''){
 	echo "<script>
-		window.onload = function verify_login(){
+			var x = setTimeout(verify_login,5);
+			function verify_login(){
 			document.getElementById('navbar_logout').style='visibility:visible;';
 			document.getElementById('navbar_username').innerHTML='$username';
 		}
@@ -95,6 +96,15 @@ textarea{
 	padding-left:0.5%;
 }
 
+#background{
+	margin:20px;
+	font-family:comic sans ms;
+	color:white;
+	background-color:black;
+	padding:2%;
+	border-radius:5%;
+}
+
 </style>
 
 <body>
@@ -117,11 +127,12 @@ textarea{
 <br><br><br><br>
 
 <div id='dashboard_navbar'>
-	<a href='write.php'><div class='dashboard_navbar_sub' id='write'>Write Blog</div></a>
-	<a href='edit.php'><div class='dashboard_navbar_sub' id='edit'>Edit Blog</div></a>
-	<a href='delete.php'><div class='dashboard_navbar_sub' id='delete'>Delete Blog</div></a>
+	<a href='write.php' class='dashboard_navbar_sub' id='write'>Write Blog</a>
+	<a href='edit.php' class='dashboard_navbar_sub' id='edit'>Edit Blog</a>
+	<a href='delete.php' class='dashboard_navbar_sub' id='delete'>Delete Blog</a>
 </div>
 
+<div id="background">
 <?php
 $con=mysqli_connect("localhost","root","") or die("Can't connect to server.");
 mysqli_select_db($con,"de_blog") or die("Create a database first.");
@@ -152,5 +163,7 @@ echo "<pre><form id='write_blog' action='edit_success.php' method='POST'>
 </form>
 </pre>";
 ?>
+
+</div>
 </body>
 </html>

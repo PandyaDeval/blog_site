@@ -13,12 +13,12 @@
 
 #reg_submit_btn{
 	background-color:transparent;
-	background-image:url("register_button.jpg");
+	background-image:url("register_button.png");
 	background-size:100% 100%;
 	border:0;
 	color:white;
-	width:15%;
-	height:5%;
+	width:13%;
+	height:7%;
 	
 }
 
@@ -34,7 +34,15 @@ input.reg_form{
 #reg_form{
 	font-size:125%;
 	font-weight:bold;
-	color:green;
+}
+
+#background{
+	margin:20px;
+	font-family:comic sans ms;
+	color:white;
+	background-color:black;
+	padding:2%;
+	border-radius:5%;
 }
 
 </style>
@@ -55,8 +63,9 @@ input.reg_form{
 </div>
 <br><br><br><br>
 
-<h1><center><font style='color:green;text-decoration:underline;'>Register</font></center></h1><br>
-<pre><form id='reg_form' action='reg_success.php' method='POST'>
+<div id="background">
+<h1><center><font style='text-decoration:underline;'>Register</font></center></h1><br>
+<pre><form id='reg_form' action='reg_success.php' method='POST' enctype="multipart/form-data">
   First Name<font style='color:red;'>*</font>
   
 <input class='reg_form' type='text' name='fname' placeholder='First Name'/>
@@ -81,11 +90,15 @@ input.reg_form{
   
 <input class='reg_form' type='password' name='cnfpass' placeholder='Confirm Password'/>
 
+  Profile Picture  
+<input class='reg_form' type='file' name='user_image'/>
+
 	
   <button id='reg_submit_btn'><input type='submit' id='reg_submit'/></button>
 	
 </form>
 </pre>
+</div>
 
 </body>
 </html>

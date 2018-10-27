@@ -3,7 +3,8 @@ session_start();
 $username=$_SESSION['username'];
 if($username!=''){
 	echo "<script>
-		window.onload = function verify_login(){
+			var x = setTimeout(verify_login,5);
+			function verify_login(){
 			document.getElementById('navbar_logout').style='visibility:visible;';
 			document.getElementById('navbar_username').innerHTML='$username';
 		}
@@ -75,9 +76,9 @@ div.dashboard_navbar_sub{
 <br><br><br><br>
 
 <div id='dashboard_navbar'>
-	<a href='write.php'><div class='dashboard_navbar_sub' id='write'>Write Blog</div></a>
-	<a href='edit.php'><div class='dashboard_navbar_sub' id='edit'>Edit Blog</div></a>
-	<a href='delete.php'><div class='dashboard_navbar_sub' id='delete'>Delete Blog</div></a>
+	<a href='write.php' class='dashboard_navbar_sub' id='write'>Write Blog</a>
+	<a href='edit.php' class='dashboard_navbar_sub' id='edit'>Edit Blog</a>
+	<a href='delete.php' class='dashboard_navbar_sub' id='delete'>Delete Blog</a>
 </div>
 
 <?php
@@ -94,16 +95,45 @@ $fetch_data=mysqli_query($con,$fetch_qry);
 while($count>0){
 	$row=mysqli_fetch_row($fetch_data);
 	echo "<div class='blog' id='blog$row[0]'>
+	<center>
 		<img style='width:400px;height:400px;' src='$row[4]'/><br><br>
 		$row[5]<br>
-		Author: $row[8]<br><br>
+		Author: <button id='mtBtn' onclick='modal_open(\"$row[8]\")'>$row[8]</button><br><br>
 		<h2>$row[1]</h2><br>
 		<div id='short_desc$row[0]'>$row[2]<br><br><a class='read_more' href='delete_blog.php?id=$row[0]'>Delete Blog</a></div>
+	</center>
 	</div><br>";
 	$count-=1;
 }
 
 ?>
 
+<div id="myModal" class="modal">
+
+  <div class="modal-content">
+    <iframe id="modal_iframe"></iframe>
+  </div>
+
+</div>
+
 </body>
+
+<script>
+var modal = document.getElementById('myModal');
+
+var btn = document.getElementById("myBtn");
+
+var iframe = document.getElementById("modal_iframe");
+
+function modal_open(username) {
+	iframe.src="author_description.php?username="+username;
+    modal.style.display = "block";
+}
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
 </html>

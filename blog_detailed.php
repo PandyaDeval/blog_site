@@ -3,7 +3,8 @@ session_start();
 $username=$_SESSION['username'];
 if($username!=''){
 	echo "<script>
-		window.onload = function verify_login(){
+			var x = setTimeout(verify_login,5);
+			function verify_login(){
 			document.getElementById('navbar_logout').style='visibility:visible;';
 			document.getElementById('navbar_username').innerHTML='$username';
 		}
@@ -17,7 +18,7 @@ mysqli_select_db($con,"de_blog") or die("Cannot conenect to database.");
 $id=$_GET["id"];
 $fetch_qry="SELECT * FROM `blogs` WHERE id=$id";
 $data=mysqli_fetch_row(mysqli_query($con,$fetch_qry));
-$ext_description=wordwrap(nl2br($data[3]),135);
+$ext_description=wordwrap(nl2br($data[3]),122);
 ?>
 
 <html>
@@ -26,6 +27,15 @@ $ext_description=wordwrap(nl2br($data[3]),135);
 <style>
 #blog{
 	margin:20px;
+	font-family:comic sans ms;
+	color:white;
+	background-color:black;
+	padding:2%;
+	border-radius:5%;
+}
+
+pre{
+	font-family:comic sans ms;
 }
 </style>
 
@@ -46,6 +56,7 @@ $ext_description=wordwrap(nl2br($data[3]),135);
 	
 </div>
 
+
 <br><br><br><br>
 
 <div id="blog"/>
@@ -55,14 +66,44 @@ $ext_description=wordwrap(nl2br($data[3]),135);
 			<h1>$data[1]</h1>
 		</center><br>
 		<h3>$data[5] ( +5:30 GMT )<br><br>
-		Author: $data[8]</h3><br>
+		Author: <button id='mtBtn' onclick='modal_open(\"$data[8]\")'>$data[8]</button><br><br>
 		<h2><pre>$ext_description</pre></h2>
 		<br><br>
 		<h3><pre>$data[6] Likes       $data[7] Comments</pre></h3>
+		
 		";	
 	?>
+
 </div>
+
+<div id="myModal" class="modal">
+
+  <div class="modal-content">
+    <iframe id="modal_iframe"></iframe>
+  </div>
+
+</div>
+
 </body>
+
+<script>
+var modal = document.getElementById('myModal');
+
+var btn = document.getElementById("myBtn");
+
+var iframe = document.getElementById("modal_iframe");
+
+function modal_open(username) {
+	iframe.src="author_description.php?username="+username;
+    modal.style.display = "block";
+}
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
 </html>
 
 

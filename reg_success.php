@@ -12,10 +12,19 @@ $email=$_POST['email'];
 $username=$_POST['username'];
 $pass=$_POST['pass'];
 $cnfpass=$_POST['cnfpass'];
+$imagename=$_FILES['user_image']['name'];
+$imagetmp=addslashes(file_get_contents($_FILES['user_image']['tmp_name']));
+if($imagename==''){
+	$image_bool=0;
+}
+else{
+	$image_bool=1;
+}
+
 
 $fetch_qry="SELECT * FROM `users`";
 if(!mysqli_query($con,$fetch_qry)){
-	mysqli_query($con,"CREATE TABLE `de_blog`.`users` ( `id` INT NOT NULL AUTO_INCREMENT ,  `fname` VARCHAR(50) NOT NULL ,  `lname` VARCHAR(50) NOT NULL ,  `email` VARCHAR(255) NOT NULL ,  `username` VARCHAR(255) NOT NULL ,  `password` VARCHAR(1000) NOT NULL ,    PRIMARY KEY  (`id`))");
+	mysqli_query($con,"CREATE TABLE `de_blog`.`users` ( `id` INT NOT NULL AUTO_INCREMENT ,  `fname` VARCHAR(50) NOT NULL ,  `lname` VARCHAR(50) NOT NULL ,  `email` VARCHAR(255) NOT NULL ,  `username` VARCHAR(255) NOT NULL ,  `password` VARCHAR(1000) NOT NULL ,  `image_bool` INT NOT NULL,  `image` LONGBLOB,    PRIMARY KEY  (`id`))");
 }
 if($fname!='' && $lname!='' && $email!='' && $username!='' && $pass!='' && $cnfpass!=''){
 	
@@ -42,13 +51,15 @@ if($fname!='' && $lname!='' && $email!='' && $username!='' && $pass!='' && $cnfp
 		$count-=1;
 	}
 
-	$insert_qry="INSERT INTO `users`(`fname`,`lname`,`email`,`username`,`password`) VALUES('$fname','$lname','$email','$username','$pass')";
+	$insert_qry="INSERT INTO `users`(`fname`,`lname`,`email`,`username`,`password`,`image_bool`,`image`) VALUES('$fname','$lname','$email','$username','$pass','$image_bool','$imagetmp')";
 	mysqli_query($con,$insert_qry);
-	echo "<script>alert('You have successfully registered!');window.location.assign('index.php');</script>";
+	session_start();
+	$_SESSION["username"]=$username;
+	echo "<script>alert('You have successfully registered!');location='dashboard.php';</script>";
 	
 }
 
 else{
-	echo "<script>alert('None of the fields should remain empty. Please try again...');location='register.php'</script>";
+	echo "<script>alert('None of the fields should remain empty. Please try again...');location='register.php';</script>";
 }
 ?>
