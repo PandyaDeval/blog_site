@@ -3,7 +3,7 @@ session_start();
 $username=$_SESSION['username'];
 if($username!=''){
 	echo "<script>
-			var x = setTimeout(verify_login,5);
+			var x = setTimeout(verify_login,10);
 			function verify_login(){
 			document.getElementById('navbar_logout').style='visibility:visible;';
 			document.getElementById('navbar_username').innerHTML='$username';
@@ -37,6 +37,22 @@ $ext_description=wordwrap(nl2br($data[3]),122);
 pre{
 	font-family:comic sans ms;
 }
+
+#cmt_submit{
+	display:none;
+	width:100%;
+}
+
+#cmt_submit_btn{
+	background-color:green;
+	background-size:100% 100%;
+	border:0;
+	color:white;
+	width:5%;
+	height:5%;
+	text-align:center;
+	font-size:100%
+}
 </style>
 
 <body>
@@ -66,14 +82,46 @@ pre{
 			<h1>$data[1]</h1>
 		</center><br>
 		<h3>$data[5] ( +5:30 GMT )<br><br>
-		Author: <button id='mtBtn' onclick='modal_open(\"$data[8]\")'>$data[8]</button><br><br>
+		Author: <button id='mtBtn' onclick='modal_open(\"$data[9]\")'>$data[9]</button><br><br>
 		<h2><pre>$ext_description</pre></h2>
 		<br><br>
-		<h3><pre>$data[6] Likes       $data[7] Comments</pre></h3>
-		
 		";	
-	?>
+		
+		if($username!=''){
+			if(strpos($data[7],$username)==''){
+				echo "<h3><pre><iframe src='likes.php?id=$id&inc=0' scrolling='no' style='padding:0px;overflow:hidden;width:40px;height:30px;'></iframe><button onclick='like()' style='border:0;width:40px;height:30px;background:none;'><img id='like_btn' style='width:100%;height:100%;' src='like.png'/></button>      <!--$data[7] Comments--></pre></h3>";
+			}
+			else{
+				echo "<h3><pre><iframe src='likes.php?id=$id&inc=0' scrolling='no' style='padding:0px;overflow:hidden;width:40px;height:30px;'></iframe><button onclick='like()' style='border:0;width:40px;height:30px;background:none;'><img id='like_btn' style='width:100%;height:100%;' src='liked.png'/></button>      <!--$data[7] Comments--></pre></h3>";
+			}
+		}
+?>
 
+<h2>Comments:- </h2>
+
+<form method='POST' action='comment_success.php?id=<?php echo $id;?>'>
+
+<textarea placeholder='Add comment here' style='width:50%;height:10%;' name='comment'></textarea><br><br>
+<button id='cmt_submit_btn'><input id='cmt_submit' type='submit'></input>Submit</button>
+
+</form>
+<?php
+
+if(mysqli_query($con,"SELECT COUNT(*) FROM `comments` WHERE blog_id=$id")){
+	$count=mysqli_fetch_row(mysqli_query($con,"SELECT COUNT(*) FROM `comments` WHERE blog_id=$id"));
+	$count=$count[0];
+}
+
+$comment_qry="SELECT * FROM `comments` WHERE blog_id=$id";
+$comment_data=mysqli_query($con,$comment_qry);
+while($count>0){
+	$row=mysqli_fetch_row($comment_data);
+	$comment=wordwrap(nl2br($row[2]),122);
+	echo "<button id='mtBtn' onclick='modal_open(\"$row[1]\")'>$row[1]</button>: 
+	$comment<br><br>";
+	$count-=1;
+}
+?>
 </div>
 
 <div id="myModal" class="modal">
@@ -93,6 +141,8 @@ var btn = document.getElementById("myBtn");
 
 var iframe = document.getElementById("modal_iframe");
 
+var like_btn = document.getElementById("like_btn");
+
 function modal_open(username) {
 	iframe.src="author_description.php?username="+username;
     modal.style.display = "block";
@@ -102,6 +152,13 @@ window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
     }
+}
+function like(){
+	var id="<?php echo $id;?>";
+	var inc="1";
+	like_btn.src='liked.png';
+	iframe.src='likes.php?id='+id+'&inc='+inc;
+	location='blog_detailed.php?id='+id;
 }
 </script>
 </html>

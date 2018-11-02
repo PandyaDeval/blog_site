@@ -312,7 +312,7 @@ while($count>0){
 	echo "<div class='blog' id='blog$row[0]'><center>
 		<img style='width:400px;height:400px;' src='$row[4]'/><br><br>
 		$row[5]<br>
-		Author: <button id='mtBtn' onclick='modal_open(\"$row[8]\")'>$row[8]</button><br><br>
+		Author: <button id='mtBtn' onclick='modal_open(\"$row[9]\")'>$row[9]</button><br><br>
 		<h2>$row[1]</h2><br>
 		<div id='short_desc$row[0]'>$row[2]<br><br><a class='read_more' href='blog_detailed.php?id=$row[0]'>Read more...</a></div>
 		</center>

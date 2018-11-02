@@ -98,7 +98,7 @@ while($count>0){
 	<center>
 		<img style='width:400px;height:400px;' src='$row[4]'/><br><br>
 		$row[5]<br>
-		Author: <button id='mtBtn' onclick='modal_open(\"$row[8]\")'>$row[8]</button><br><br>
+		Author: <button id='mtBtn' onclick='modal_open(\"$row[9]\")'>$row[9]</button><br><br>
 		<h2>$row[1]</h2><br>
 		<div id='short_desc$row[0]'>$row[2]<br><br><a class='read_more' href='delete_blog.php?id=$row[0]'>Delete Blog</a></div>
 	</center>
