@@ -223,3 +223,43 @@ iframe{
 	font-family:comic sans ms;
 	font-size:125%;
 }
+
+.autocomplete {
+  /*the container must be positioned relative:*/
+  position: relative;
+  display: inline-block;
+  color:red;
+}
+
+.autocomplete-items {
+  position: absolute;
+  background-color:black;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 50%;
+  width:83%;
+  left: 16%;
+  right: 0;
+  color:red;
+  font-size:50%;
+}
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #000000; 
+  border-bottom: 1px solid #ffffff; 
+  
+}
+.autocomplete-items div:hover {
+  /*when hovering an item:*/
+  background-color: DodgerBlue !important; 
+  
+}
+.autocomplete-active {
+  /*when navigating through the items using the arrow keys:*/
+  background-color: DodgerBlue !important; 
+  color: #ffffff; 
+  
+}
