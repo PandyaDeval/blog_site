@@ -21,7 +21,12 @@ if($username!='' && $password!=''){
 			if($password==$row[5]){
 				$flag=0;
 				$_SESSION['username']=$username;
-				echo "<script>location='dashboard.php';</script>";
+				if($username!='admin'){
+					echo "<script>location='dashboard.php';</script>";
+				}
+				else{
+					echo "<script>location='admin_home.php';</script>";
+				}
 			}
 		}
 		$count-=1;

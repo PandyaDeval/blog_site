@@ -61,85 +61,33 @@ while($count>0){
 #blog{
 	margin:20px;
 }
-#dashboard_navbar{
-	position:fixed;
-	width:20%;
-	height:25%;
-	top:20%;
-	right:0;
-	background-color:purple;
-	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+
+td{
+	border-left:2px solid white;
+	border-right:2px solid white;
+	
 }
 
-div.dashboard_navbar_sub{
-	position:fixed;
-	width:20%;
-	right:0;
-	font-weight:bold;
+th{
+	border:2px solid white;
+}
+
+table{
+	width:94%;
+	border:2px solid white;
+	margin-left:3%;
+	margin-right:3%;
+	border-collapse:collapse;
+}
+
+.tabs{
+	background:transparent;
+	border:1px solid white;
 	color:white;
-	font-size:150%;
-	text-align:center;
-}
-
-#write{
-	top:22%;
-}
-
-#edit{
-	top:30%;
-}
-
-#delete{
-	top:38%;
-}
-
-#write_submit{
-	display:none;
-	width:100%;
-}
-
-#write_submit_btn{
-	background-color:green;
-	background-size:100% 100%;
-	border:0;
-	color:white;
-	width:15%;
+	width:10%;
 	height:5%;
-	text-align:center;
-	font-size:125%
 }
 
-
-input.write_blog_form{
-	width:98%;
-	height:5%;
-	margin-left:1%;
-	margin-right:1%;
-	padding-left:0.5%;
-}
-
-#write_form{
-	font-size:125%;
-	font-weight:bold;
-	color:green;
-}
-
-textarea{
-	width:98%;
-	height:20%;
-	margin-left:1%;
-	margin-right:1%;
-	padding-left:0.5%;
-}
-
-#background{
-	margin:20px;
-	font-family:comic sans ms;
-	color:white;
-	background-color:black;
-	padding:2%;
-	border-radius:5%;
-}
 </style>
 
 <body>
@@ -161,36 +109,34 @@ textarea{
 
 <br><br><br><br>
 
-<div id='dashboard_navbar'>
-	<a href='write.php' class='dashboard_navbar_sub' id='write'>Write Blog</a>
-	<a href='edit.php' class='dashboard_navbar_sub' id='edit'>Edit Blog</a>
-	<a href='delete.php' class='dashboard_navbar_sub' id='delete'>Delete Blog</a>
+<div class="blog">
+<pre>     <button class="tabs" onclick="switch_tabs(0)">Users</button> <button class="tabs" onclick="switch_tabs(1)">Feedbacks</button></pre>
+<br><br>
+<div id="user_table">
+<?php
+$fetch_qry="SELECT * FROM `users`";
+$fetch_data=mysqli_query($con,$fetch_qry);
+echo "<table><tr><th>First Name</th><th>Last Name</th><th>Email</th><th>Username</th><th>Password</th></tr>";
+while($row=mysqli_fetch_array($fetch_data)){
+	echo "<tr><td>$row[1]</td><td>$row[2]</td><td>$row[3]</td><td><button id='mtBtn' onclick='modal_open(\"$row[4]\")'>$row[4]</button></td><td>$row[5]</td></tr>";
+}
+?>
+
+</table>
 </div>
 
-<div id='background'>
-<h1><center>Write a Blog</center></h1><br>
-<pre><form id='write_blog' action='write_success.php' method='POST'>
-  Title<font style='color:red;'>*</font>
+<div style='font-size:100%;display:none;' id="feedbacks">
+<?php
+$fetch_qry="SELECT * FROM `feedbacks`";
+$fetch_data=mysqli_query($con,$fetch_qry);
+while($row=mysqli_fetch_row($fetch_data)){
+	$feedback_text=wordwrap(nl2br($row[3]),122);
+	echo "<pre>  <a href='mailto:$row[2]'>$row[1]</a>: 
+  $row[4]
   
-<input class='write_blog_form' type='text' name='title' placeholder='Blog Title'/>
-	
-  Short Description<font style='color:red;'>*</font>
-  
-<input class='write_blog_form' type='text' name='short_desc' placeholder='Short Description'/>
-	
-  Long Description<font style='color:red;'>*</font>
-  
-<textarea class='write_blog_form' name='long_desc' placeholder='Long Description'></textarea>
-	
-  Image Link
-  
-<input class='write_blog_form' type='text' name='imagelink' placeholder='Image Link'/>
-	
-  
-  <button id='write_submit_btn'><input type='submit' id='write_submit'/>Create!</button>
-	
-</form>
-</pre>
+  $feedback_text</pre>";
+}
+?>
 </div>
 
 <div style="display:none;" id="contact_form">
@@ -205,8 +151,34 @@ textarea{
 </center>
 </div>
 
+<div id="myModal" class="modal">
+
+  <div class="modal-content">
+    <iframe id="modal_iframe"></iframe>
+  </div>
+
+</div>
+
 </body>
+
 <script>
+var modal = document.getElementById('myModal');
+
+var btn = document.getElementById("myBtn");
+
+var iframe = document.getElementById("modal_iframe");
+
+function modal_open(username) {
+	iframe.src="author_description.php?username="+username;
+    modal.style.display = "block";
+}
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
 function autocomplete(inp, arr) {
   /*the autocomplete function takes two arguments,
   the text field element and an array of possible autocompleted values:*/
@@ -308,6 +280,20 @@ function autocomplete(inp, arr) {
 var tags="<?php echo $tags;?>".split(',');
 var ip=document.getElementById("search_text");
 autocomplete(ip,tags);
+
+
+
+function switch_tabs(x){
+	if(x==0){
+		document.getElementById('user_table').style="display:block;color;";
+		document.getElementById('feedbacks').style="display:none;";
+	}
+	else{
+		document.getElementById('feedbacks').style="display:block;";
+		document.getElementById('user_table').style="display:none;";
+	}
+}
+
 
 function display_contact(x){
 	event.preventDefault();

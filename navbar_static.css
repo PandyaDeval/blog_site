@@ -263,3 +263,25 @@ iframe{
   color: #ffffff; 
   
 }
+
+
+#contact_form{
+	z-index:5;
+	position:fixed;
+	top:10%;
+	left:20%;
+	width:60%;
+	height:55%;
+	background-color:#888;
+	border-radius:5%;
+}
+
+.contact_form_ip{
+	background-color:transparent;
+	color:white;
+	border:0;
+	border-bottom:2px solid black;
+}
+.contact_form_ip::placeholder{
+	color:white;
+}

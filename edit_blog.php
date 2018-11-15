@@ -7,6 +7,12 @@ if($username!=''){
 			function verify_login(){
 			document.getElementById('navbar_logout').style='visibility:visible;';
 			document.getElementById('navbar_username').innerHTML='$username';
+			if('$username'=='admin'){
+				document.getElementById('username_link').href='admin_home.php';
+			}
+			else{
+				document.getElementById('username_link').href='dashboard.php';
+			}
 		}
 	</script>";
 }
@@ -146,12 +152,12 @@ textarea{
 	<div class="navbar_sub" id="navbar_logo"><img id="logo" src='logo_transparent.png'/></div>
 	<a href="index.php"><div class="navbar_sub" id="navbar_sitename">De_Blog</div></a>
 	<a href="signin.php"><div class="navbar_sub" id="navbar_sign">Sign In/Register</div></a>
-	<a href=""><div class="navbar_sub" id="navbar_contactus">Contact Us </div></a>
-	<a href="dashboard.php"><div class="navbar_sub" id="navbar_username"></div></a>
+	<a onclick="display_contact(1)"><div class="navbar_sub" id="navbar_contactus">Contact Us </div></a>
+	<a id="username_link" href="dashboard.php"><div class="navbar_sub" id="navbar_username"></div></a>
 	<a href="logout.php"><div class="navbar_sub" id="navbar_logout">Logout</div></a>
 	<div class="navbar_sub" id="navbar_search">
-		<form autocomplete="off" name="search" method="POST"> 
-			 <button id="submitbtn"><input type="submit" id="submit"/></button> <input type="text" id="search_text" name="search_text"/>
+		<form autocomplete="off" method="GET" action="search.php"> 
+			 <button id="submitbtn"><input type="submit" id="submit"/></button><input type="text" id="search_text" name="search_text"/>
 		</form>
 	</div>
 	
@@ -197,6 +203,18 @@ echo "<pre><form id='write_blog' action='edit_success.php' method='POST'>
 </pre>";
 ?>
 
+</div>
+
+<div style="display:none;" id="contact_form">
+<button style='color:white;font-size:150%;margin-right:3%;margin-top:2%;background:transparent;border:0;float:right;' onclick='display_contact(0)'>&times;</button><br><br><br>
+<center>
+<form autocomplete="off" action="index.php" method="POST">
+<input class="contact_form_ip" type='text' placeholder="Enter Name" name="contact_name"/><br><br>
+<input class="contact_form_ip" type='text' placeholder="Enter Email" name="contact_email"/><br><br>
+<textarea style="width:50%;height:40%;" class="contact_form_ip" placeholder="Enter Feedback" name="contact_feedback"></textarea><br><br>
+<input style="background-color:black;color:white;width:10%;height:10%;" type="submit"/>
+</form>
+</center>
 </div>
 </body>
 <script>
@@ -302,5 +320,31 @@ var tags="<?php echo $tags;?>".split(',');
 var ip=document.getElementById("search_text");
 autocomplete(ip,tags);
 
+function display_contact(x){
+	event.preventDefault();
+	if(x==1){
+		document.getElementById('contact_form').style="display:block;"
+	}
+	else{
+		document.getElementById('contact_form').style="display:none;"
+	}
+}
 </script>
+
 </html>
+
+<?php
+
+@$contact_name=$_POST['contact_name'];
+@$contact_email=$_POST['contact_email'];
+@$contact_feedback=addslashes($_POST['contact_feedback']);
+if($contact_name!='' and $contact_email!='' and $contact_feedback!=''){
+	$insert_qry="INSERT INTO `feedbacks`(`name`,`email`,`feedback`) VALUES('$contact_name','$contact_email','$contact_feedback')";
+	if(mysqli_query($con,$insert_qry)){
+		echo "<script>alert('Feedback submitted successfully. We will reach out to you soon.');</script>";
+	}
+	else{
+		echo "<script>alert('Feedback could not be submitted.');</script>";
+	}
+}
+?>
