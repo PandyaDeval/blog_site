@@ -34,23 +34,10 @@ $fetch_data=mysqli_query($con,$fetch_qry);
 $tags='';
 while($count>0){
 	$row=mysqli_fetch_row($fetch_data);
-	$tags.="$row[1],";
+	$tags.="$row[10],";
 	$count-=1;
 }
 
-if(mysqli_query($con,"SELECT COUNT(*) FROM `users`")){
-	$count=mysqli_fetch_row(mysqli_query($con,"SELECT COUNT(*) FROM `users`"));
-	$count=$count[0];
-}
-
-
-$fetch_qry="SELECT * FROM `users`";
-$fetch_data=mysqli_query($con,$fetch_qry);
-while($count>0){
-	$row=mysqli_fetch_row($fetch_data);
-	$tags.="$row[4],";
-	$count-=1;
-}
 
 
 $id=$_GET['id'];
@@ -317,6 +304,7 @@ function autocomplete(inp, arr) {
 
 /*initiate the autocomplete function on the "search_text" element, and pass along the countries array as possible autocomplete values:*/
 var tags="<?php echo $tags;?>".split(',');
+tags=tags.filter((v,i) => tags.indexOf(v) == i);
 var ip=document.getElementById("search_text");
 autocomplete(ip,tags);
 

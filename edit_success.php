@@ -23,6 +23,9 @@ $title=addslashes($_POST['title']);
 $short_desc=addslashes($_POST['short_desc']);
 $long_desc=addslashes($_POST['long_desc']);
 $imagelink=$_POST['imagelink'];
+if($imagelink==''){
+	$imagelink='http://sheffieldhatters.com/wp-content/uploads/2017/06/Afrobarometer-default-graphic-blog-banner.jpg';
+}
 
 $update_qry="UPDATE `blogs` SET title='$title', short_description='$short_desc', long_description='$long_desc', image_link='$imagelink' WHERE id='$id'";
 if(mysqli_query($con,$update_qry)){

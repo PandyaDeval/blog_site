@@ -20,9 +20,13 @@ $title=addslashes($_POST['title']);
 $short_desc=addslashes($_POST['short_desc']);
 $long_desc=addslashes($_POST['long_desc']);
 $imagelink=$_POST['imagelink'];
+$tags=addslashes($_POST['tags']);
+if($imagelink==''){
+	$imagelink='http://sheffieldhatters.com/wp-content/uploads/2017/06/Afrobarometer-default-graphic-blog-banner.jpg';
+}
 
 if($title!='' && $short_desc!='' && $long_desc!=''){
-	$insert_qry="INSERT INTO `blogs`(`title`,`short_description`,`long_description`,`image_link`,`username`) VALUES('$title','$short_desc','$long_desc','$imagelink','$username')";
+	$insert_qry="INSERT INTO `blogs`(`title`,`short_description`,`long_description`,`image_link`,`username`,`tags`) VALUES('$title','$short_desc','$long_desc','$imagelink','$username','$tags')";
 	if(mysqli_query($con,$insert_qry)){
 		echo "<script>location='dashboard.php'</script>";
 	}

@@ -31,32 +31,20 @@ $fetch_data=mysqli_query($con,$fetch_qry);
 $tags='';
 while($count>0){
 	$row=mysqli_fetch_row($fetch_data);
-	$tags.="$row[1],";
+	$tags.="$row[10],";
 	$count-=1;
 }
 
-/*if(mysqli_query($con,"SELECT COUNT(*) FROM `users`")){
-	$count=mysqli_fetch_row(mysqli_query($con,"SELECT COUNT(*) FROM `users`"));
-	$count=$count[0];
-}
-
-
-$fetch_qry="SELECT * FROM `users`";
-$fetch_data=mysqli_query($con,$fetch_qry);
-while($count>0){
-	$row=mysqli_fetch_row($fetch_data);
-	$tags.="$row[4],";
-	$count-=1;
-}*/
 ?>
 
 <?php
 $con=mysqli_connect("localhost","root","") or die("Cannot connect to server.");
 mysqli_select_db($con,"de_blog") or die("Cannot conenect to database.");
 $search_text=$_GET["search_text"];
-$fetch_qry="SELECT * FROM `blogs` WHERE title='$search_text'";
-$data=mysqli_fetch_row(mysqli_query($con,$fetch_qry));
-$ext_description=wordwrap(nl2br($data[3]),122);
+$fetch_qry="SELECT * FROM `blogs` WHERE tags LIKE '%$search_text%'";
+$fetch_data=mysqli_query($con,$fetch_qry);
+//$data=mysqli_fetch_row(mysqli_query($con,$fetch_qry));
+//$ext_description=wordwrap(nl2br($data[3]),122);
 ?>
 
 <html>
@@ -113,32 +101,35 @@ pre{
 
 <br><br><br><br>
 
-<div id="blog"/>
+<!--<div id="blog"/>-->
 <?php
-		echo "<center>
-			<img src='$data[4]' style='width:500px;height:500px;'/><br><br>
-			<h1>$data[1]</h1>
-		</center><br>
-		<h3>$data[5] ( +5:30 GMT )<br><br>
-		Author: <button id='mtBtn' onclick='modal_open(\"$data[9]\")'>$data[9]</button><br><br>
-		<h2><pre>$ext_description</pre></h2>
-		<br><br>
-		$search_text
-		";	
-		
-		if($username!=''){
-			if(strpos($data[7],$username)==''){
-				echo "<h3><pre><iframe src='likes.php?id=$data[0]&inc=0' scrolling='no' style='padding:0px;overflow:hidden;width:40px;height:30px;'></iframe><button onclick='like()' style='border:0;width:40px;height:30px;background:none;'><img id='like_btn' style='width:100%;height:100%;' src='like.png'/></button>      <!--$data[7] Comments--></pre></h3>";
+		while($data=mysqli_fetch_array($fetch_data)){
+			$ext_description=wordwrap(nl2br($data[3]),122);
+			echo "<div id='blog'/>
+				<center>
+				<img src='$data[4]' style='width:500px;height:500px;'/><br><br>
+				<h1>$data[1]</h1>
+			</center><br>
+			<h3>$data[5] ( +5:30 GMT )<br><br>
+			Author: <button id='mtBtn' onclick='modal_open(\"$data[9]\")'>$data[9]</button><br><br>
+			<h2><pre>$ext_description</pre></h2>
+			<br><br>
+			$search_text
+			";	
+			
+			if($username!=''){
+				if(strpos($data[7],$username)==''){
+					echo "<h3><pre><iframe src='likes.php?id=$data[0]&inc=0' scrolling='no' style='padding:0px;overflow:hidden;width:40px;height:30px;'></iframe><button onclick='like()' style='border:0;width:40px;height:30px;background:none;'><img id='like_btn' style='width:100%;height:100%;' src='like.png'/></button>      <!--$data[7] Comments--></pre></h3>";
+				}
+				else{
+					echo "<h3><pre><iframe src='likes.php?id=$data[0]&inc=0' scrolling='no' style='padding:0px;overflow:hidden;width:40px;height:30px;'></iframe><button onclick='like()' style='border:0;width:40px;height:30px;background:none;'><img id='like_btn' style='width:100%;height:100%;' src='liked.png'/></button>      <!--$data[7] Comments--></pre></h3>";
+				}
 			}
-			else{
-				echo "<h3><pre><iframe src='likes.php?id=$data[0]&inc=0' scrolling='no' style='padding:0px;overflow:hidden;width:40px;height:30px;'></iframe><button onclick='like()' style='border:0;width:40px;height:30px;background:none;'><img id='like_btn' style='width:100%;height:100%;' src='liked.png'/></button>      <!--$data[7] Comments--></pre></h3>";
-			}
-		}
 ?>
 
 <h2>Comments:- </h2>
 
-<form method='POST' action='comment_success.php?id=<?php echo $id;?>'>
+<form method='POST' action='comment_success.php?id=<?php echo $data[0];?>'>
 
 <textarea placeholder='Add comment here' style='width:50%;height:10%;' name='comment'></textarea><br><br>
 <button id='cmt_submit_btn'><input id='cmt_submit' type='submit'></input>Submit</button>
@@ -146,22 +137,23 @@ pre{
 </form>
 <?php
 
-if(mysqli_query($con,"SELECT COUNT(*) FROM `comments` WHERE blog_id=$data[0]")){
-	$count=mysqli_fetch_row(mysqli_query($con,"SELECT COUNT(*) FROM `comments` WHERE blog_id=$data[0]"));
-	$count=$count[0];
-}
+	if(mysqli_query($con,"SELECT COUNT(*) FROM `comments` WHERE blog_id=$data[0]")){
+		$count=mysqli_fetch_row(mysqli_query($con,"SELECT COUNT(*) FROM `comments` WHERE blog_id=$data[0]"));
+		$count=$count[0];
+	}
 
-$comment_qry="SELECT * FROM `comments` WHERE blog_id=$data[0]";
-$comment_data=mysqli_query($con,$comment_qry);
-while($count>0){
-	$row=mysqli_fetch_row($comment_data);
-	$comment=wordwrap(nl2br($row[2]),122);
-	echo "<button id='mtBtn' onclick='modal_open(\"$row[1]\")'>$row[1]</button>: 
-	$comment<br><br>";
-	$count-=1;
+	$comment_qry="SELECT * FROM `comments` WHERE blog_id=$data[0]";
+	$comment_data=mysqli_query($con,$comment_qry);
+	while($count>0){
+		$row=mysqli_fetch_row($comment_data);
+		$comment=wordwrap(nl2br($row[2]),122);
+		echo "<button id='mtBtn' onclick='modal_open(\"$row[1]\")'>$row[1]</button>: 
+		$comment<br><br>";
+		$count-=1;
+	}
+	echo "</div>";
 }
 ?>
-</div>
 
 <div style="display:none;" id="contact_form">
 <button style='color:white;font-size:150%;margin-right:3%;margin-top:2%;background:transparent;border:0;float:right;' onclick='display_contact(0)'>&times;</button><br><br><br>
@@ -311,6 +303,7 @@ function autocomplete(inp, arr) {
 
 /*initiate the autocomplete function on the "search_text" element, and pass along the countries array as possible autocomplete values:*/
 var tags="<?php echo $tags;?>".split(',');
+tags=tags.filter((v,i) => tags.indexOf(v) == i);
 var ip=document.getElementById("search_text");
 autocomplete(ip,tags);
 
